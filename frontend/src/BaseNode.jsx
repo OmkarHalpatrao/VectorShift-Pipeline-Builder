@@ -5,6 +5,7 @@ import { useStore } from './store';
 
 export const BaseNode = ({ id, data, config }) => {
   const updateNodeField = useStore((state) => state.updateNodeField);
+  const removeNode = useStore((state) => state.removeNode);
 
   const {
     title,
@@ -22,6 +23,7 @@ export const BaseNode = ({ id, data, config }) => {
     padding: '12px',
     background: 'white',
     boxShadow: '0 2px 8px rgba(0,0,0,0.1)',
+    boxSizing: 'border-box',
     ...style
   };
 
@@ -47,7 +49,8 @@ export const BaseNode = ({ id, data, config }) => {
               padding: '4px 8px',
               border: '1px solid #ddd',
               borderRadius: '4px',
-              fontSize: '12px'
+              fontSize: '12px',
+              boxSizing: 'border-box' 
             }}
           />
         );
@@ -118,7 +121,7 @@ export const BaseNode = ({ id, data, config }) => {
         />
       ))}
 
-      {/* Title */}
+      {/* Title
       <div style={{
         fontWeight: 'bold',
         marginBottom: '8px',
@@ -126,7 +129,66 @@ export const BaseNode = ({ id, data, config }) => {
         color: '#333'
       }}>
         {title}
-      </div>
+      </div> */}
+
+      <div style={{
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: '8px'
+}}>
+  <div style={{
+    fontWeight: 'bold',
+    fontSize: '14px',
+    color: '#333'
+  }}>
+    {title}
+  </div>
+
+  <button
+  onClick={() => removeNode(id)}
+  title="Delete node"
+  style={{
+    width: '20px',
+    height: '20px',
+    borderRadius: '50%',          // ✅ circular
+    border: '1px solid #ddd',
+    background: '#fff',
+    padding: 0,                   // ✅ no padding
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#888',
+    transition: 'all 0.2s ease'
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.borderColor = '#e53935';
+    e.currentTarget.style.color = '#e53935';
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.borderColor = '#ddd';
+    e.currentTarget.style.color = '#888';
+  }}
+>
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+</button>
+
+
+</div>
+
 
       {/* Fields */}
       <div style={{ display: 'flex', flexDirection: 'column', gap: '8px' }}>

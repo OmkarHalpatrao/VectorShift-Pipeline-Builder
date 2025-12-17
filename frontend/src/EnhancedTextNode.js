@@ -9,6 +9,7 @@ export const EnhancedTextNode = ({ id, data }) => {
   const [text, setText] = useState(data?.text || '{{input}}');
   const [variables, setVariables] = useState([]);
   const textareaRef = useRef(null);
+  const removeNode = useStore((state) => state.removeNode);
 
   // Extract variables from text (matches {{variableName}})
   useEffect(() => {
@@ -82,7 +83,7 @@ export const EnhancedTextNode = ({ id, data }) => {
       ))}
 
       {/* Title */}
-      <div style={{
+      {/* <div style={{
         fontWeight: 'bold',
         marginBottom: '8px',
         fontSize: '14px',
@@ -93,7 +94,70 @@ export const EnhancedTextNode = ({ id, data }) => {
       }}>
         <span>📝</span>
         <span>Text</span>
-      </div>
+      </div> */}
+
+
+      <div style={{
+  display: 'flex',
+  justifyContent: 'space-between',
+  alignItems: 'center',
+  marginBottom: '8px'
+}}>
+  <div style={{
+    fontWeight: 'bold',
+    fontSize: '14px',
+    color: '#333',
+    display: 'flex',
+    alignItems: 'center',
+    gap: '6px'
+  }}>
+    <span>📝</span>
+    <span>Text</span>
+  </div>
+
+ <button
+  onClick={() => removeNode(id)}
+  title="Delete node"
+  style={{
+    width: '20px',
+    height: '20px',
+    borderRadius: '50%',          // ✅ circular
+    border: '1px solid #ddd',
+    background: '#fff',
+    padding: 0,                   // ✅ no padding
+    cursor: 'pointer',
+    display: 'flex',
+    alignItems: 'center',
+    justifyContent: 'center',
+    color: '#888',
+    transition: 'all 0.2s ease'
+  }}
+  onMouseEnter={(e) => {
+    e.currentTarget.style.borderColor = '#e53935';
+    e.currentTarget.style.color = '#e53935';
+  }}
+  onMouseLeave={(e) => {
+    e.currentTarget.style.borderColor = '#ddd';
+    e.currentTarget.style.color = '#888';
+  }}
+>
+  <svg
+    width="12"
+    height="12"
+    viewBox="0 0 24 24"
+    fill="none"
+    stroke="currentColor"
+    strokeWidth="2"
+    strokeLinecap="round"
+    strokeLinejoin="round"
+  >
+    <line x1="18" y1="6" x2="6" y2="18" />
+    <line x1="6" y1="6" x2="18" y2="18" />
+  </svg>
+</button>
+
+
+</div>
 
       {/* Text input with auto-resize */}
       <div>
@@ -121,7 +185,8 @@ export const EnhancedTextNode = ({ id, data }) => {
             resize: 'none',
             overflow: 'hidden',
             fontFamily: 'monospace',
-            background: 'white'
+            background: 'white',
+            boxSizing: 'border-box'
           }}
         />
         {variables.length > 0 && (
